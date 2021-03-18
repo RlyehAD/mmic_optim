@@ -1,2 +1,3 @@
 pydantic>=1.7
 qcelemental>=0.18.0
+pytest
