@@ -15,8 +15,6 @@ def test_mmic_optim_imported():
     assert "mmic_optim" in sys.modules
 
 
-# mmic_optim.registered_comps.add("mmic_optim_openmm2")
-# print(mmic_optim.registered_comps)
 def test_mmic_optim_models():
     mmic_optim.components.registered.registered_comps.add("mmic_optim")
     inputs = OptimInput(engine="mmic_optim")
