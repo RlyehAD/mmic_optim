@@ -10,14 +10,20 @@ mmic_optim
 ## Temporary installation
 
 ```bash
+# Clone and install this repo
+git clone https://github.com/MolSSI/mmic_optim
+cd mmic_optim
 pip install . -r requirements
 
+# Clone and install MMIC
 git clone https://github.com/MolSSI/mmic
 cd mmic && pip install . && cd .. && rm -rf mmic
 
+# Clone and install MMElemental
 git clone https://github.com/MolSSI/mmelemental         
 cd mmelemental && pip install . && cd .. && rm -rf mmelemental
 
+# Run tests
 pytest mmic_optim/tests
 ```
 
