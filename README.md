@@ -5,6 +5,21 @@ mmic_optim
 [![codecov](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/mmic_optim/branch/master/graph/badge.svg)](https://codecov.io/gh/REPLACE_WITH_OWNER_ACCOUNT/mmic_optim/branch/master)
 
 # Optimization Component
+
+## Temporary installation
+
+```bash
+pip install . -r requirements
+
+git clone https://github.com/MolSSI/mmic
+cd mmic && pip install . && cd .. && rm -rf mmic
+
+git clone https://github.com/MolSSI/mmelemental         
+cd mmelemental && pip install . && cd .. && rm -rf mmelemental
+
+pytest mmic_optim/tests
+```
+
 ## Preparing Input
 
 ```python
@@ -26,16 +41,12 @@ input = OptimInput(
 
 ## Running energy minimization with NAMD component
 
-<p align="center">
-<img src="mmic_namd/data/imgs/optim_comp.png">
-</p>
-
 ```python
-# Import component for NAMD energy minimization
-from mmic_optim.components import RunComponent
+# Import generic component for running energy minimization
+from mmic_optim.components import OptimComponent
 
 # Run minimization
-output = RunComponent.compute(input)
+output = OptimComponent.compute(input)
 
 # Extract potential energy from output
 pot_energy = output.observables.pot_energy
