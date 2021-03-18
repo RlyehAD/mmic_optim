@@ -13,7 +13,7 @@
 # Clone and install this repo
 git clone https://github.com/MolSSI/mmic_optim
 cd mmic_optim
-pip install . -r requirements
+pip install . -r requirements.txt
 
 # Clone and install MMIC
 git clone https://github.com/MolSSI/mmic
