@@ -27,8 +27,6 @@ class OptimComponent(GenericComponent):
         timeout: Optional[int] = None,
     ) -> Tuple[bool, OptimOutput]:
 
-        print(registered_comps)
-
         comp = inputs.engine
         if comp not in registered_comps:
             raise NotImplementedError(
