@@ -51,6 +51,17 @@ jobs:
         auto-activate-base: false
         show-channel-urls: true
 
+    - name: Install deps
+      shell: bash -l {0}
+      run: |
+        git clone https://github.com/MolSSI/mmic
+        cd mmic && pip install . && cd .. && rm -rf mmic
+
+        git clone https://github.com/MolSSI/mmelemental
+        cd mmelemental && pip install . && cd .. && rm -rf mmelemental
+
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Install package
 
       # conda setup requires this special shell
