@@ -2,7 +2,7 @@
 
 [//]: # (Badges)
 [![GitHub Actions Build Status](https://github.com/MolSSI/mmic_optim/workflows/CI/badge.svg)](https://github.com/MolSSI/mmic_optim/actions?query=workflow%3ACI)
-[![codecov](https://codecov.io/gh/MolSSI/mmic_optim/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/mmic_optim/branch/master)
+[![codecov](https://codecov.io/gh/MolSSI/mmic_optim/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/mmic_optim/branch/main)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/MolSSI/mmic_optim.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/MolSSI/mmic_optim/context:python)
 
 
