@@ -8,7 +8,7 @@ from . import models
 from . import components
 
 # For testing dummy component
-_optimComponent = components.dummy_component.OptimDummyComponent
+_mainComponent = components.dummy_component.OptimDummyComponent
 
 # Handle versioneer
 from ._version import get_versions
