@@ -1,23 +1,29 @@
-mmic_optim
-==============================
+# Optimization Component
+
 [//]: # (Badges)
 [![GitHub Actions Build Status](https://github.com/MolSSI/mmic_optim/workflows/CI/badge.svg)](https://github.com/MolSSI/mmic_optim/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/MolSSI/mmic_optim/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/mmic_optim/branch/master)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/MolSSI/mmic_optim.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/MolSSI/mmic_optim/context:python)
 
-# Optimization Component
+
 
 ## Temporary installation
 
 ```bash
-pip install . -r requirements
+# Clone and install this repo
+git clone https://github.com/MolSSI/mmic_optim
+cd mmic_optim
+pip install . -r requirements.txt
 
+# Clone and install MMIC
 git clone https://github.com/MolSSI/mmic
 cd mmic && pip install . && cd .. && rm -rf mmic
 
+# Clone and install MMElemental
 git clone https://github.com/MolSSI/mmelemental         
 cd mmelemental && pip install . && cd .. && rm -rf mmelemental
 
+# Run tests
 pytest mmic_optim/tests
 ```
 
