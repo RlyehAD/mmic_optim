@@ -38,7 +38,7 @@ class OptimComponent(GenericComponent):
             raise ModuleNotFoundError(f"Component {comp} not installed.")
 
         comp_mod = importlib.import_module(comp)
-        return True, comp_mod._optimComponent.compute(inputs)
+        return True, comp_mod._mainComponent.compute(inputs)
 
     @staticmethod
     def installed(trans: Optional[Set[str]] = registered_comps) -> List[str]:
