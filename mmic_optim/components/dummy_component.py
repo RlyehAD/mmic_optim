@@ -1,13 +1,28 @@
 from ..models.input import OptimInput
 from ..models.output import OptimOutput
-from .blueprint_component import OptimBluePrintComponent
-from typing import List, Tuple, Optional
+from mmic.components.blueprints import SpecificComponent
+from typing import List, Tuple, Optional, Set
 
 
 __all__ = ["OptimDummyComponent"]
 
 
-class OptimDummyComponent(OptimBluePrintComponent):
+class OptimDummyComponent(SpecificComponent):
+    """ 
+    A sample component that does nothing interesting. Folow the same structure
+    to develop your own optim component. You can attach any helper method to this 
+    component as long as it does not overwrite the core methods in the :class:
+    `SpecificComponent` class.
+    """
+
+    @classmethod
+    def input(cls):
+        return OptimInput
+
+    @classmethod
+    def output(cls):
+        return OptimOutput
+
     def execute(
         self,
         inputs: OptimInput,
@@ -17,4 +32,4 @@ class OptimDummyComponent(OptimBluePrintComponent):
         timeout: Optional[int] = None,
     ) -> Tuple[bool, OptimOutput]:
 
-        return True, OptimOutput(procInput=inputs)
+        return True, OptimOutput(proc_input=inputs)
