@@ -11,12 +11,12 @@ class OptimInput(ProcInput):
 
     # System fields
     molecule: Dict[str, Molecule] = Field(
-        None,
+        ...,
         description="Molecular mechanics molecule object(s). See the :class:``Molecule`` class. "
         "Example: mol = {'ligand': Molecule, 'receptor': Molecule, 'solvent': Molecule}.",
     )
-    forcefield: Optional[Union[Dict[str, ForceField], Dict[str, str]]] = Field(
-        None,
+    forcefield: Dict[str, ForceField] = Field(
+        ...,
         description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
     )
     cell: Optional[Tuple[Tuple[float], Tuple[float]]] = Field(
@@ -72,13 +72,12 @@ class OptimInput(ProcInput):
 
     # Validators
     @validator("forcefield")
-    def _valid_ff(cls, v, values, **kwargs):
-        for name in values["mol"]:
+    def _valid_ff(cls, v, values):
+        for name in values.get("molecule"):
             if name not in v:
                 raise ValueError(f"{name} does not have a defined force field.")
-        assert len(v) == len(values["mol"]), (
+        assert len(v) == len(values["molecule"]), (
             "Every molecule should have a single force field definition. "
-            + f"{len(values['mol'])} molecules defined using {len(v)} force fields."
+            + f"{len(values['molecule'])} molecules defined using {len(v)} force fields."
         )
-
         return v
