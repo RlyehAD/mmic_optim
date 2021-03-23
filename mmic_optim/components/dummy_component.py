@@ -8,9 +8,9 @@ __all__ = ["OptimDummyComponent"]
 
 
 class OptimDummyComponent(SpecificComponent):
-    """ 
+    """
     A sample component that does nothing interesting. Folow the same structure
-    to develop your own optim component. You can attach any helper method to this 
+    to develop your own optim component. You can attach any helper method to this
     component as long as it does not overwrite the core methods in the :class:
     `SpecificComponent` class.
     """
@@ -32,4 +32,4 @@ class OptimDummyComponent(SpecificComponent):
         timeout: Optional[int] = None,
     ) -> Tuple[bool, OptimOutput]:
 
-        return True, OptimOutput(proc_input=inputs)
+        return True, OptimOutput(proc_input=inputs, molecule=inputs.molecule)
