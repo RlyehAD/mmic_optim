@@ -8,7 +8,6 @@ __all__ = ["OptimComponent"]
 
 
 class OptimComponent(GenericComponent):
-
     @classmethod
     def input(cls):
         return OptimInput
@@ -19,7 +18,7 @@ class OptimComponent(GenericComponent):
 
     @property
     def supported_comps(self) -> Set[str]:
-        """ Returns the supported components e.g. set(['mmic_mda',...]).
+        """Returns the supported components e.g. set(['mmic_mda',...]).
         Returns
         -------
         Set[str]
