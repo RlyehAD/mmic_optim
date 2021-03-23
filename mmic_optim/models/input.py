@@ -1,12 +1,41 @@
 from mmelemental.models.proc.base import ProcInput
-from pydantic import Field
-from typing import Optional, Dict, List
+from mmelemental.models import Molecule, ForceField, TrajInput, Trajectory
+from pydantic import Field, validator
+from typing import Optional, Dict, List, Union, Tuple
 
 __all__ = ["OptimInput"]
 
 
 class OptimInput(ProcInput):
-    """ Basic model for energy minimization. """
+    """ Basic input model for energy minimization. """
+
+    # System fields
+    molecule: Dict[str, Molecule] = Field(
+        None,
+        description="Molecular mechanics molecule object(s). See the :class:``Molecule`` class. "
+        "Example: mol = {'ligand': Molecule, 'receptor': Molecule, 'solvent': Molecule}.",
+    )
+    forcefield: Optional[Union[Dict[str, ForceField], Dict[str, str]]] = Field(
+        None,
+        description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
+    )
+    cell: Optional[Tuple[Tuple[float], Tuple[float]]] = Field(
+        None,
+        description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
+    )
+    boundary: Tuple[str] = Field(
+        None,
+        description="Boundary conditions in all dimensions e.g. (periodic, periodic, periodic) imposes periodic boundaries in 3D.",
+    )
+
+    # I/O fields
+    trajectory: Optional[Dict[str, TrajInput]] = Field(
+        None,
+        description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry': 10, 'velocities': 100, 'forces': 50} "
+        "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps. A comma "
+        "seperator is used to indicate multiple variables stored in the same trajectory e.g. {'geometry,y,z': 1} produces a single trajectory object which stores the x, y, and z positions "
+        "every step.",
+    )
 
     # Global fields
     max_steps: int = Field(
@@ -40,3 +69,16 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
+
+    # Validators
+    @validator("forcefield")
+    def _valid_ff(cls, v, values, **kwargs):
+        for name in values["mol"]:
+            if name not in v:
+                raise ValueError(f"{name} does not have a defined force field.")
+        assert len(v) == len(values["mol"]), (
+            "Every molecule should have a single force field definition. "
+            + f"{len(values['mol'])} molecules defined using {len(v)} force fields."
+        )
+
+        return v
