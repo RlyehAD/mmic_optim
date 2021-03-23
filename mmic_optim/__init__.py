@@ -6,6 +6,8 @@ A short description of the project.
 # Add imports here
 from . import models
 from . import components
+from .models import *
+from .components import *
 
 # For testing dummy component
 _mainComponent = components.dummy_component.OptimDummyComponent
