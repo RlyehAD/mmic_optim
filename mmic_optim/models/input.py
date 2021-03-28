@@ -56,7 +56,15 @@ class OptimInput(ProcInput):
         None,
         description="Optimization method to use e.g. conjugate_gradient.",
     )
-
+    cut_off: str = Field(
+        None,
+        description="Neighbor searching algorithm"
+    )
+    coulomb_type str = Field(
+        None,
+        description="Algorithm used to deal with long-range interaction"
+    )
+    
     # Geometric constraint fields
     bond_const: Optional[Dict[str, List[int]]] = Field(
         None,
