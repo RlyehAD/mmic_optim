@@ -60,7 +60,7 @@ class OptimInput(ProcInput):
         None,
         description="Neighbor searching algorithm"
     )
-    coulomb_type str = Field(
+    coulomb_type: str = Field(
         None,
         description="Algorithm used to deal with long-range interaction"
     )
