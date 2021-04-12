@@ -64,6 +64,7 @@ class OptimInput(ProcInput):
         None,
         description="Algorithm used to deal with long-range interaction"
     )
+    # Coulomb_type and cut_off variables should be replaced by more general variables such as 'long_range_force'
     
     # Geometric constraint fields
     bond_const: Optional[Dict[str, List[int]]] = Field(
