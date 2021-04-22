@@ -23,7 +23,7 @@ class OptimInput(ProcInput):
         None,
         description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
     )
-    boundary: Tuple[str] = Field(
+    boundary: Tuple[str, str, str] = Field(
         None,
         description="Boundary conditions in all dimensions e.g. (periodic, periodic, periodic) imposes periodic boundaries in 3D.",
     )
