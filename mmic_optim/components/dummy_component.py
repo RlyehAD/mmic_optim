@@ -1,13 +1,13 @@
 from ..models.input import OptimInput
 from ..models.output import OptimOutput
-from mmic.components.blueprints import SpecificComponent
+from mmic.components.blueprints import GenericComponent
 from typing import List, Tuple, Optional, Set
 
 
 __all__ = ["OptimDummyComponent"]
 
 
-class OptimDummyComponent(SpecificComponent):
+class OptimDummyComponent(GenericComponent):
     """
     A sample component that does nothing interesting. Follow the same structure
     to develop your own optim component. You can attach any helper method to this
