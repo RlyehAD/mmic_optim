@@ -9,9 +9,6 @@ from . import components
 from .models import *
 from .components import *
 
-# For testing dummy component
-_mainComponent = components.dummy_component.OptimDummyComponent
-
 # Handle versioneer
 from ._version import get_versions
 
