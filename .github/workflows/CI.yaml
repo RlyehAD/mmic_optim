@@ -58,6 +58,9 @@ jobs:
         git clone https://github.com/MolSSI/mmelemental
         cd mmelemental && pip install . && cd .. && rm -rf mmelemental
 
+        git clone https://github.com/MolSSI/cmselemental
+        cd cmselemental && pip install . && cd .. && rm -rf cmselemental
+        
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Install package
