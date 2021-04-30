@@ -7,7 +7,7 @@ __all__ = ["OptimInput"]
 
 
 class OptimInput(ProcInput):
-    """ Basic input model for energy minimization. """
+    """Basic input model for energy minimization."""
 
     # System fields
     molecule: Dict[str, Molecule] = Field(
@@ -31,10 +31,8 @@ class OptimInput(ProcInput):
     # I/O fields
     trajectory: Optional[Dict[str, TrajInput]] = Field(
         None,
-        description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry': 10, 'velocities': 100, 'forces': 50} "
-        "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps. A comma "
-        "seperator is used to indicate multiple variables stored in the same trajectory e.g. {'geometry,y,z': 1} produces a single trajectory object which stores the x, y, and z positions "
-        "every step.",
+        description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry_freq': 10, 'velocities_freq': 100, 'forces_freq': 50} "
+        "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps.",
     )
 
     # Global fields
