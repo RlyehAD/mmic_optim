@@ -15,6 +15,8 @@ dependencies:
   - codecov
 
     # Pip-only installs
-  #- pip:
-  #  - codecov
+  - pip:
+    - git+https://github.com/MolSSI/mmic.git
+    - git+https://github.com/MolSSI/mmelemental.git
+    - git+https://github.com/MolSSI/cmselemental.git@dev
 
