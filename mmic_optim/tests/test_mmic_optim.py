@@ -4,15 +4,16 @@ Unit and regression test for the mmic_optim package.
 
 # Import package, test suite, and other packages as needed
 import mmic_optim
-from mmic_optim import OptimInput, OptimComponent
+from mmic.components.blueprints import TacticComponent
+import mm_data
 import pytest
+from typing import Tuple
 import sys
 import json
-import os
 
 
-mol_file = os.path.join("mmic_optim", "data", "molecule.json")
-ff_file = os.path.join("mmic_optim", "data", "forcefield.json")
+mol_file = mm_data.mols["water-mol.json"]
+ff_file = mm_data.ffs["water-ff.json"]
 
 
 def test_mmic_optim_imported():
@@ -27,7 +28,34 @@ def test_mmic_optim_models():
     with open(ff_file, "r") as fp:
         ff = json.load(fp)
 
-    inputs = OptimInput(
+    inputs = mmic_optim.OptimInput(
         component="mmic_optim", molecule={"mol": mol}, forcefield={"mol": ff}
     )
-    outputs = mmic_optim.components.optim_component.OptimComponent.compute(inputs)
+
+    class OptimDummyComponent(TacticComponent):
+        @classmethod
+        def input(cls):
+            return mmic_optim.OptimInput
+
+        @classmethod
+        def output(cls):
+            return mmic_optim.OptimOutput
+
+        @classmethod
+        def strategy_comp(cls):
+            return mmic_optim.OptimComponent
+
+        @classmethod
+        def get_version(cls):
+            return None
+
+        def execute(
+            self,
+            inputs: mmic_optim.OptimInput,
+        ) -> Tuple[bool, mmic_optim.OptimOutput]:
+
+            return True, mmic_optim.OptimOutput(
+                proc_input=inputs, molecule=inputs.molecule
+            )
+
+    outputs = OptimDummyComponent.compute(inputs)
