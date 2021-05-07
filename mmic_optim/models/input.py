@@ -1,7 +1,7 @@
 from mmelemental.models.proc.base import ProcInput
-from mmelemental.models import Molecule, ForceField, TrajInput, Trajectory
+from mmelemental.models import Molecule, ForceField, TrajInput
 from pydantic import Field, validator
-from typing import Optional, Dict, List, Union, Tuple
+from typing import Optional, Dict, List, Tuple
 
 __all__ = ["OptimInput"]
 
