@@ -17,9 +17,6 @@ from mmelemental.models.molecule import Molecule
 solute = Molecule.from_file(path_to_file)
 solvent = Molecule.from_file(path_to_file)
 
-# Import optimization data model
-from mmic_optim.models import OptimInput
-
 # Construct input data model from molecule object
 inop = {
     "mol":{
@@ -37,9 +34,12 @@ from mmic_optim.components import OptimComponent
 
 # Run minimization
 outop = OptimComponent.compute(inop)
+```
 
-# Extract potential energy from output
+## Extracting output
+```python
 pot_energy = output.observables["pot_energy"]
+...
 ```
 
 ### Copyright
