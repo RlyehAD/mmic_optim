@@ -38,7 +38,7 @@ outop = OptimComponent.compute(inop)
 
 ## Extracting output
 ```python
-pot_energy = output.observables["pot_energy"]
+pot_energy = outop.observables["pot_energy"]
 ...
 ```
 
