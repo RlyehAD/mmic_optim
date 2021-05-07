@@ -23,7 +23,7 @@ class OptimInput(ProcInput):
         None,
         description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
     )
-    boundary: Tuple[str] = Field(
+    boundary: List[str] = Field(
         None,
         description="Boundary conditions in all dimensions e.g. (periodic, periodic, periodic) imposes periodic boundaries in 3D.",
     )
@@ -67,6 +67,15 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
+    cut_off: str = Field(
+        None,
+        description="Neighbor searching algorithm"
+    )
+    coulomb_type: str = Field(
+        None,
+        description="Algorithm used to deal with long-range interaction"
+    )
+    # Coulomb_type and cut_off variables should be replaced by more general variables such as 'long_range_force'
 
     # Validators
     @validator("forcefield")
