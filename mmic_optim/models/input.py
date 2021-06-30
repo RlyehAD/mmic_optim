@@ -1,7 +1,7 @@
 from mmelemental.models.proc.base import ProcInput
-from mmelemental.models import Molecule, ForceField, TrajInput
+from mmelemental.models import Molecule, ForceField, TrajInput, ForcesInput
 from pydantic import Field, validator
-from typing import Optional, Dict, List, Tuple
+from typing import Optional, Dict, List, Tuple, Union
 
 __all__ = ["OptimInput"]
 
@@ -19,13 +19,23 @@ class OptimInput(ProcInput):
         ...,
         description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
     )
-    cell: Optional[Tuple[Tuple[float], Tuple[float]]] = Field(
+    boundary: Union[
+        Tuple[str, str],
+        Tuple[str, str, str, str],
+        Tuple[str, str, str, str, str, str],
+    ] = Field(
+        ...,
+        description="Boundary conditions in all dimensions e.g. (periodic, periodic) imposes periodic boundaries in 1D.",
+    )
+    cell: Optional[
+        Union[
+            Tuple[float, float],
+            Tuple[float, float, float, float],
+            Tuple[float, float, float, float, float, float],
+        ]
+    ] = Field(
         None,
         description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
-    )
-    boundary: List[str] = Field(
-        None,
-        description="Boundary conditions in all dimensions e.g. (periodic, periodic, periodic) imposes periodic boundaries in 3D.",
     )
 
     # I/O fields
@@ -67,15 +77,16 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
-    cut_off: str = Field(
-        None,
-        description="Neighbor searching algorithm"
+    cut_off: str = Field(None, description="Neighbor searching algorithm")
+
+    # Forces parameters
+    short_forces: ForcesInput = Field(
+        ..., description="Algorithms for computing short-range forces."
     )
-    coulomb_type: str = Field(
-        None,
-        description="Algorithm used to deal with long-range interaction"
+
+    long_forces: ForcesInput = Field(
+        ..., description="Algorithms for computing long-range forces."
     )
-    # Coulomb_type and cut_off variables should be replaced by more general variables such as 'long_range_force'
 
     # Validators
     @validator("forcefield")
@@ -87,4 +98,9 @@ class OptimInput(ProcInput):
             "Every molecule should have a single force field definition. "
             + f"{len(values['molecule'])} molecules defined using {len(v)} force fields."
         )
+        return v
+
+    @validator("cell")
+    def _valid_cell(cls, v, values):
+        assert len(v) == len(values.get("boundary"))
         return v
