@@ -29,7 +29,19 @@ def test_mmic_optim_models():
         ff = json.load(fp)
 
     inputs = mmic_optim.OptimInput(
-        component="mmic_optim", molecule={"mol": mol}, forcefield={"mol": ff}
+        component="mmic_optim",
+        molecule={"mol": mol},
+        forcefield={"mol": ff},
+        boundary=(
+            "periodic",
+            "periodic",
+            "periodic",
+            "periodic",
+            "periodic",
+            "periodic",
+        ),
+        short_forces={"method": "cut-off", "cutoff": 14.0, "dielectric": 0.0},
+        long_forces={"method": "pme", "dielectric": 0.0},
     )
 
     class OptimDummyComponent(TacticComponent):
