@@ -1,4 +1,4 @@
-from . import input
-from . import output
-from .input import *
-from .output import *
+from .input import OptimInput
+from .output import OptimOutput
+
+__all__ = ["OptimInput", "OptimOutput"]

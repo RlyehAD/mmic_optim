@@ -1,13 +1,13 @@
 from mmelemental.models.proc.base import ProcInput
-from mmelemental.models import Molecule, ForceField, TrajInput, Trajectory
+from mmelemental.models import Molecule, ForceField, TrajInput, ForcesInput
 from pydantic import Field, validator
-from typing import Optional, Dict, List, Union, Tuple
+from typing import Optional, Dict, List, Tuple, Union
 
 __all__ = ["OptimInput"]
 
 
 class OptimInput(ProcInput):
-    """ Basic input model for energy minimization. """
+    """Basic input model for energy minimization."""
 
     # System fields
     molecule: Dict[str, Molecule] = Field(
@@ -19,22 +19,30 @@ class OptimInput(ProcInput):
         ...,
         description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
     )
-    cell: Optional[Tuple[Tuple[float], Tuple[float]]] = Field(
+    boundary: Union[
+        Tuple[str, str],
+        Tuple[str, str, str, str],
+        Tuple[str, str, str, str, str, str],
+    ] = Field(
+        ...,
+        description="Boundary conditions in all dimensions e.g. (periodic, periodic) imposes periodic boundaries in 1D.",
+    )
+    cell: Optional[
+        Union[
+            Tuple[float, float],
+            Tuple[float, float, float, float],
+            Tuple[float, float, float, float, float, float],
+        ]
+    ] = Field(
         None,
         description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
-    )
-    boundary: Tuple[str, str, str] = Field(
-        None,
-        description="Boundary conditions in all dimensions e.g. (periodic, periodic, periodic) imposes periodic boundaries in 3D.",
     )
 
     # I/O fields
     trajectory: Optional[Dict[str, TrajInput]] = Field(
         None,
-        description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry': 10, 'velocities': 100, 'forces': 50} "
-        "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps. A comma "
-        "seperator is used to indicate multiple variables stored in the same trajectory e.g. {'geometry,y,z': 1} produces a single trajectory object which stores the x, y, and z positions "
-        "every step.",
+        description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry_freq': 10, 'velocities_freq': 100, 'forces_freq': 50} "
+        "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps.",
     )
 
     # Global fields
@@ -78,6 +86,16 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
+    cut_off: str = Field(None, description="Neighbor searching algorithm")
+
+    # Forces parameters
+    short_forces: ForcesInput = Field(
+        ..., description="Algorithms for computing short-range forces."
+    )
+
+    long_forces: ForcesInput = Field(
+        ..., description="Algorithms for computing long-range forces."
+    )
 
     # Validators
     @validator("forcefield")
@@ -89,4 +107,9 @@ class OptimInput(ProcInput):
             "Every molecule should have a single force field definition. "
             + f"{len(values['molecule'])} molecules defined using {len(v)} force fields."
         )
+        return v
+
+    @validator("cell")
+    def _valid_cell(cls, v, values):
+        assert len(v) == len(values.get("boundary"))
         return v

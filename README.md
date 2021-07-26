@@ -5,27 +5,7 @@
 [![codecov](https://codecov.io/gh/MolSSI/mmic_optim/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/mmic_optim/branch/main)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/MolSSI/mmic_optim.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/MolSSI/mmic_optim/context:python)
 
-
-
-## Temporary installation
-
-```bash
-# Clone and install this repo
-git clone https://github.com/MolSSI/mmic_optim
-cd mmic_optim
-pip install . -r requirements.txt
-
-# Clone and install MMIC
-git clone https://github.com/MolSSI/mmic
-cd mmic && pip install . && cd .. && rm -rf mmic
-
-# Clone and install MMElemental
-git clone https://github.com/MolSSI/mmelemental         
-cd mmelemental && pip install . && cd .. && rm -rf mmelemental
-
-# Run tests
-pytest mmic_optim/tests
-```
+This is part of the [MolSSI](http://molssi.org) Molecular Mechanics Interoperable Components ([MMIC](https://github.com/MolSSI/mmic)) project. This package provides a strategy component for running energy minimization based on a force field.
 
 ## Preparing Input
 
@@ -37,26 +17,29 @@ from mmelemental.models.molecule import Molecule
 solute = Molecule.from_file(path_to_file)
 solvent = Molecule.from_file(path_to_file)
 
-# Import optimization data model
-from mmic_optim.models import OptimInput
-
 # Construct input data model from molecule object
-input = OptimInput(
-    mol={"solute": solute, "solvent": solvent}, nsteps=1e4, engine="openmm"
-)
+inop = {
+    "mol":{
+        "solute": solute, "solvent": solvent
+    }, 
+    nsteps=1e4
+}
 ```
 
-## Running energy minimization with NAMD component
+## Running energy minimization
 
 ```python
 # Import generic component for running energy minimization
 from mmic_optim.components import OptimComponent
 
 # Run minimization
-output = OptimComponent.compute(input)
+outop = OptimComponent.compute(inop)
+```
 
-# Extract potential energy from output
-pot_energy = output.observables.pot_energy
+## Extracting output
+```python
+pot_energy = outop.observables["pot_energy"]
+...
 ```
 
 ### Copyright
