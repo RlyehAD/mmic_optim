@@ -1,6 +1,6 @@
 from mmelemental.models.proc.base import ProcOutput
 from .input import OptimInput
-from mmelemental.models import Molecule, ForceField, Ensemble, Trajectory
+from mmelemental.models import Molecule, Ensemble, Trajectory
 from pydantic import Field
 from typing import Optional, Dict, List
 
