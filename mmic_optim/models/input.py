@@ -1,4 +1,3 @@
-# from mmelemental.models.proc.base import ProcInput
 from cmselemental.models.procedures import ProcInput
 from mmelemental.models import Molecule, ForceField, TrajInput, ForcesInput
 from pydantic import Field, validator
@@ -65,11 +64,6 @@ class OptimInput(ProcInput):
         None,
         description="Optimization method to use e.g. conjugate_gradient.",
     )
-    cut_off: str = Field(None, description="Neighbor searching algorithm")
-    coulomb_type: str = Field(
-        None, description="Algorithm used to deal with long-range interaction"
-    )
-    # Coulomb_type and cut_off variables should be replaced by more general variables such as 'long_range_force'
 
     # Geometric constraint fields
     bond_const: Optional[Dict[str, List[int]]] = Field(
@@ -83,7 +77,6 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
-    cut_off: str = Field(None, description="Neighbor searching algorithm")
 
     # Forces parameters
     short_forces: ForcesInput = Field(

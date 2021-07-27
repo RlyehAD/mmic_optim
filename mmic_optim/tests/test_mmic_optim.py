@@ -29,7 +29,6 @@ def test_mmic_optim_models():
         ff = json.load(fp)
 
     inputs = mmic_optim.OptimInput(
-        #component="mmic_optim",
         schema_name="test",
         schema_version=1.0,
         molecule={"mol": mol},

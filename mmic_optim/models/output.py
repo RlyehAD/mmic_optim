@@ -1,4 +1,3 @@
-# from mmelemental.models.proc.base import ProcOutput
 from cmselemental.models.procedures import ProcOutput
 from .input import OptimInput
 from mmelemental.models import Molecule, Ensemble, Trajectory
