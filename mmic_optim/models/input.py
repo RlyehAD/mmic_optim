@@ -1,4 +1,4 @@
-from mmelemental.models.proc.base import ProcInput
+from cmselemental.models.procedures import ProcInput
 from mmelemental.models import Molecule, ForceField, TrajInput, ForcesInput
 from pydantic import Field, validator
 from typing import Optional, Dict, List, Tuple, Union
@@ -77,7 +77,6 @@ class OptimInput(ProcInput):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
-    cut_off: str = Field(None, description="Neighbor searching algorithm")
 
     # Forces parameters
     short_forces: ForcesInput = Field(
