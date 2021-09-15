@@ -41,7 +41,7 @@ def test_mmic_optim_models():
             "periodic",
             "periodic",
         ),
-        cell=(0,0,0,1,1,1),
+        cell=(0, 0, 0, 1, 1, 1),
         short_forces={"method": "cut-off", "cutoff": 14.0, "dielectric": 0.0},
         long_forces={"method": "pme", "dielectric": 0.0},
     )
@@ -69,8 +69,10 @@ def test_mmic_optim_models():
         ) -> Tuple[bool, mmic_optim.OptimOutput]:
 
             return True, mmic_optim.OptimOutput(
-                proc_input=inputs, molecule=inputs.molecule,
-                schema_name="test", schema_version=1.0,
+                proc_input=inputs,
+                molecule=inputs.molecule,
+                schema_name="test",
+                schema_version=1.0,
                 success=True,
             )
 
