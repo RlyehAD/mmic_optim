@@ -56,7 +56,7 @@ def test_mmic_optim_models():
             return mmic_optim.OptimOutput
 
         @classmethod
-        def strategy_comp(cls):
+        def strategy_comps(cls):
             return mmic_optim.OptimComponent
 
         @classmethod
