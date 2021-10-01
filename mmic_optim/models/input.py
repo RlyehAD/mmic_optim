@@ -1,14 +1,57 @@
-from cmselemental.models.procedures import ProcInput
-from mmelemental.models import Molecule, ForceField
-from mmelemental.models.forcefield import ForcesInput
-from mmelemental.models.collect import TrajInput
+from cmselemental.models.procedures import InputProc
+from mmelemental.models.base import ProtoModel
+from mmelemental.models import Molecule
+from mmelemental.models.forcefield import ForceField
 from pydantic import Field, validator
 from typing import Optional, Dict, List, Tuple, Union
 
-__all__ = ["OptimInput"]
+__all__ = ["InputOptim"]
+
+class InputForces(ProtoModel):
+
+    method: str = Field(..., description="The algorithm used to compute the force. e.g. PME")
+
+    cutoff: Optional[float] = Field(None, description="The cut-off distance")
+
+    cutoff_units: Optional[str] = Field("angstrom", description="The unit of cutoff distance")
 
 
-class OptimInput(ProcInput):
+
+class InputTraj(ProtoModel):
+
+    geometry_freq: Optional[int] = Field(
+        None, description="Every number of steps geometry are saved."
+    )
+    geometry_units: Optional[str] = Field(
+        "angstrom",
+        description="Units for atomic geometry. Defaults to Angstroms.",
+        dimensionality=LENGTH_DIM,
+    )
+    velocities_freq: Optional[int] = Field(
+        None,
+        description="Save velocities every 'velocities_freq' steps.",
+    )
+    velocities_units: Optional[str] = Field(
+        "angstrom/fs",
+        description="Units for atomic velocities. Defaults to Angstroms/femtoseconds.",
+        dimensionality=LENGTH_DIM / TIME_DIM,
+    )
+    forces_freq: Optional[int] = Field(
+        None, description="Every number of steps velocities are saved."
+    )
+    forces_units: Optional[str] = Field(
+        "kJ/(mol*angstrom)",
+        description="Units for atomic forces. Defaults to KiloJoules/mol.Angstroms.",
+        dimensionality=MASS_DIM * LENGTH_DIM / (SUBS_DIM * TIME_DIM ** 2),
+    )
+    freq: Optional[int] = Field(
+        None,
+        description="Every number of steps geometry, velocities, and/or forces are saved.",
+    )
+
+
+
+class InputOptim(InputProc):
     """Basic input model for energy minimization."""
 
     # System fields
@@ -41,7 +84,7 @@ class OptimInput(ProcInput):
     )
 
     # I/O fields
-    trajectory: Optional[Dict[str, TrajInput]] = Field(
+    trajectory: Optional[Dict[str, InputTraj]] = Field(
         None,
         description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry_freq': 10, 'velocities_freq': 100, 'forces_freq': 50} "
         "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps.",
@@ -81,12 +124,12 @@ class OptimInput(ProcInput):
     )
 
     # Forces parameters
-    short_forces: ForcesInput = Field(
-        ..., description="Algorithms for computing short-range forces."
+    short_forces: Optional[InputForces] = Field(
+        None, description="Schema model for computing short-range forces."
     )
 
-    long_forces: ForcesInput = Field(
-        ..., description="Algorithms for computing long-range forces."
+    long_forces: Optional[InputForces] = Field(
+        None, description="Schema model for computing long-range forces."
     )
 
     # Validators

@@ -28,7 +28,7 @@ def test_mmic_optim_models():
     with open(ff_file, "r") as fp:
         ff = json.load(fp)
 
-    inputs = mmic_optim.OptimInput(
+    inputs = mmic_optim.InputOptim(
         schema_name="test",
         schema_version=1.0,
         molecule={"mol": mol},
@@ -49,7 +49,7 @@ def test_mmic_optim_models():
     class OptimDummyComponent(TacticComponent):
         @classmethod
         def input(cls):
-            return mmic_optim.OptimInput
+            return mmic_optim.InputOptim
 
         @classmethod
         def output(cls):
@@ -65,7 +65,7 @@ def test_mmic_optim_models():
 
         def execute(
             self,
-            inputs: mmic_optim.OptimInput,
+            inputs: mmic_optim.InputOptim,
         ) -> Tuple[bool, mmic_optim.OptimOutput]:
 
             return True, mmic_optim.OptimOutput(
