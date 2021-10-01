@@ -1,6 +1,7 @@
 from ..models.input import OptimInput
 from ..models.output import OptimOutput
 from mmic.components.blueprints import StrategyComponent
+from cmselemental.util.decorators import classproperty
 from typing import Set
 
 
@@ -8,16 +9,16 @@ __all__ = ["OptimComponent"]
 
 
 class OptimComponent(StrategyComponent):
-    @classmethod
+    @classproperty
     def input(cls):
         return OptimInput
 
-    @classmethod
+    @classproperty
     def output(cls):
         return OptimOutput
 
-    @classmethod
-    def get_version(cls) -> str:
+    @classproperty
+    def version(cls) -> str:
         """Finds program, extracts version, returns normalized version string.
         Returns
         -------
@@ -26,11 +27,11 @@ class OptimComponent(StrategyComponent):
         """
         return ""
 
-    @classmethod
+    @classproperty
     def tactic_comps(cls) -> Set[str]:
         """Returns the supported components e.g. set(['mmic_mda',...]).
         Returns
         -------
         Set[str]
         """
-        return set(["mmic_optim_openmm"])
+        return {"mmic_optim_openmm", "mmic_optim_gmx"}
