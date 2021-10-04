@@ -62,14 +62,9 @@ class InputOptim(InputProc):
     """Basic input model for energy minimization."""
 
     # System fields
-    molecule: Dict[str, Molecule] = Field(
+    system: Dict[Molecule, ForceField] = Field(
         ...,
-        description="Molecular mechanics molecule object(s). See the :class:``Molecule`` class. "
-        "Example: mol = {'ligand': Molecule, 'receptor': Molecule, 'solvent': Molecule}.",
-    )
-    forcefield: Dict[str, ForceField] = Field(
-        ...,
-        description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
+        description="A mapping of Molecule to its corresponding ForceField object(s).",
     )
     boundary: Union[
         Tuple[str, str], Tuple[str, str, str, str], Tuple[str, str, str, str, str, str]
@@ -87,14 +82,12 @@ class InputOptim(InputProc):
         None,
         description="Cell dimensions in the form: ((xmin, ymin, ...), (xmax, ymax, ...))",
     )
-
     # I/O fields
     trajectory: Optional[Dict[str, InputTraj]] = Field(
         None,
         description="Trajectories to write for quantity 'key' every 'value' steps. E.g. {'geometry_freq': 10, 'velocities_freq': 100, 'forces_freq': 50} "
         "produces 3 trajectory objects storing positions every 10 steps, velocities, every 100 steps, and forces every 50 steps.",
     )
-
     # Global fields
     max_steps: int = Field(
         None, description="Max number of optimization steps to perform."
@@ -113,7 +106,6 @@ class InputOptim(InputProc):
     method: str = Field(
         None, description="Optimization method to use e.g. conjugate_gradient."
     )
-
     # Geometric constraint fields
     bond_const: Optional[Dict[str, List[int]]] = Field(
         None,
@@ -126,7 +118,6 @@ class InputOptim(InputProc):
     bond_const_tol: Optional[float] = Field(
         None, description="Tolerance used for constraint self-consistency."
     )
-
     # Forces parameters
     short_forces: Optional[InputForces] = Field(
         None, description="Schema model for computing short-range forces."
