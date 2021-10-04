@@ -70,11 +70,15 @@ def test_mmic_optim_models():
             self, inputs: mmic_optim.InputOptim
         ) -> Tuple[bool, mmic_optim.OutputOptim]:
 
+            mols = []
+            for key in inputs.system:
+                mols.append(key)
+
             return (
                 True,
                 mmic_optim.OutputOptim(
                     proc_input=inputs,
-                    molecule=inputs.molecule,
+                    molecule=mols,
                     schema_name="test",
                     schema_version=1.0,
                     success=True,
