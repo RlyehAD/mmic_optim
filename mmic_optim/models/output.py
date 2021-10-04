@@ -2,7 +2,7 @@ from cmselemental.models.procedures import OutputProc
 from .input import InputOptim
 from mmelemental.models import Molecule, Trajectory
 from pydantic import Field
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Union
 
 __all__ = ["OutputOptim"]
 
