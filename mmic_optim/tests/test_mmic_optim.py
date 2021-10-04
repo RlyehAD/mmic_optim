@@ -74,7 +74,7 @@ def test_mmic_optim_models():
                 True,
                 mmic_optim.OutputOptim(
                     proc_input=inputs,
-                    molecule=inputs.molecule,
+                    molecule=mol,
                     schema_name="test",
                     schema_version=1.0,
                     success=True,
