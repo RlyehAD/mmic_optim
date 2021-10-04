@@ -128,17 +128,6 @@ class InputOptim(InputProc):
     )
 
     # Validators
-    @validator("forcefield")
-    def _valid_ff(cls, v, values):
-        for name in values.get("molecule"):
-            if name not in v:
-                raise ValueError(f"{name} does not have a defined force field.")
-        assert len(v) == len(values["molecule"]), (
-            "Every molecule should have a single force field definition. "
-            + f"{len(values['molecule'])} molecules defined using {len(v)} force fields."
-        )
-        return v
-
     @validator("cell")
     def _valid_cell(cls, v, values):
         assert len(v) == len(values.get("boundary"))
