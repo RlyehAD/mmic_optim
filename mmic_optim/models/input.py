@@ -24,7 +24,10 @@ class InputForces(ProtoModel):
 
 
 class InputTraj(ProtoModel):
-
+    selection: Optional[str] = Field(
+        None, description="Reference to which selections to store/write to file. Could be anything " 
+        "for now such as protein, all, etc.",
+    )
     geometry_freq: Optional[int] = Field(
         None, description="Every number of steps geometry are saved."
     )
