@@ -4,7 +4,8 @@ Unit and regression test for the mmic_optim package.
 
 # Import package, test suite, and other packages as needed
 import mmic_optim
-from mmic.components.blueprints import TacticComponent
+from mmelemental.models import Molecule, ForceField
+from mmic.components import TacticComponent
 from cmselemental.util.decorators import classproperty
 import mm_data
 import pytest
@@ -24,10 +25,12 @@ def test_mmic_optim_imported():
 
 def test_mmic_optim_models():
     with open(mol_file, "r") as fp:
-        mol = json.load(fp)
+        mol_data = json.load(fp)
+        mol = Molecule(**mol_data)
 
     with open(ff_file, "r") as fp:
-        ff = json.load(fp)
+        ff_data = json.load(fp)
+        ff = ForceField(**ff_data)
 
     inputs = mmic_optim.InputOptim(
         schema_name="test",
