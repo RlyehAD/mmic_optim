@@ -1,15 +1,15 @@
-from cmselemental.models.procedures import ProcOutput
-from .input import OptimInput
+from cmselemental.models.procedures import OutputProc
+from .input import InputOptim
 from mmelemental.models import Molecule
 from mmelemental.models.collect import Ensemble, Trajectory
 from pydantic import Field
 from typing import Optional, Dict, List
 
-__all__ = ["OptimOutput"]
+__all__ = ["OutputOptim"]
 
 
-class OptimOutput(ProcOutput):
-    proc_input: OptimInput = Field(
+class OutputOptim(OutputProc):
+    proc_input: InputOptim = Field(
         ..., description="Input schema used to run optimization"
     )
     molecule: Dict[str, Molecule] = Field(
@@ -33,6 +33,5 @@ class OptimOutput(ProcOutput):
         "e.g. ligand scores used in docking simulations.",
     )
     observable_units: Optional[Dict[str, str]] = Field(
-        None,
-        description="Observable units. Any unit supported by pint is allowed.",
+        None, description="Observable units. Any unit supported by pint is allowed."
     )

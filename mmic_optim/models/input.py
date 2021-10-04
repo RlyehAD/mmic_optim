@@ -4,17 +4,23 @@ from mmelemental.models import Molecule
 from mmelemental.models.forcefield import ForceField
 from pydantic import Field, validator
 from typing import Optional, Dict, List, Tuple, Union
+from mmelemental.util.units import LENGTH_DIM, MASS_DIM, TIME_DIM, SUBS_DIM
+
 
 __all__ = ["InputOptim"]
 
+
 class InputForces(ProtoModel):
 
-    method: str = Field(..., description="The algorithm used to compute the force. e.g. PME")
+    method: str = Field(
+        ..., description="The algorithm used to compute the force. e.g. PME"
+    )
 
     cutoff: Optional[float] = Field(None, description="The cut-off distance")
 
-    cutoff_units: Optional[str] = Field("angstrom", description="The unit of cutoff distance")
-
+    cutoff_units: Optional[str] = Field(
+        "angstrom", description="The unit of cutoff distance", dimensionality=LENGTH_DIM
+    )
 
 
 class InputTraj(ProtoModel):
@@ -28,8 +34,7 @@ class InputTraj(ProtoModel):
         dimensionality=LENGTH_DIM,
     )
     velocities_freq: Optional[int] = Field(
-        None,
-        description="Save velocities every 'velocities_freq' steps.",
+        None, description="Save velocities every 'velocities_freq' steps."
     )
     velocities_units: Optional[str] = Field(
         "angstrom/fs",
@@ -50,7 +55,6 @@ class InputTraj(ProtoModel):
     )
 
 
-
 class InputOptim(InputProc):
     """Basic input model for energy minimization."""
 
@@ -65,9 +69,7 @@ class InputOptim(InputProc):
         description='Forcefield object(s) or name(s) for every Molecule defined in "mol".',
     )
     boundary: Union[
-        Tuple[str, str],
-        Tuple[str, str, str, str],
-        Tuple[str, str, str, str, str, str],
+        Tuple[str, str], Tuple[str, str, str, str], Tuple[str, str, str, str, str, str]
     ] = Field(
         ...,
         description="Boundary conditions in all dimensions e.g. (periodic, periodic) imposes periodic boundaries in 1D.",
@@ -106,8 +108,7 @@ class InputOptim(InputProc):
 
     # Algorithmic fields
     method: str = Field(
-        None,
-        description="Optimization method to use e.g. conjugate_gradient.",
+        None, description="Optimization method to use e.g. conjugate_gradient."
     )
 
     # Geometric constraint fields

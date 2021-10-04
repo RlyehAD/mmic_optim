@@ -1,5 +1,5 @@
-from ..models.input import OptimInput
-from ..models.output import OptimOutput
+from ..models.input import InputOptim
+from ..models.output import OutputOptim
 from mmic.components.blueprints import StrategyComponent
 from typing import Set
 
@@ -10,11 +10,11 @@ __all__ = ["OptimComponent"]
 class OptimComponent(StrategyComponent):
     @classmethod
     def input(cls):
-        return OptimInput
+        return InputOptim
 
     @classmethod
     def output(cls):
-        return OptimOutput
+        return OutputOptim
 
     @classmethod
     def get_version(cls) -> str:
