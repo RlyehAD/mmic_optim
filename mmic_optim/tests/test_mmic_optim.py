@@ -32,8 +32,7 @@ def test_mmic_optim_models():
     inputs = mmic_optim.InputOptim(
         schema_name="test",
         schema_version=1.0,
-        molecule={"mol": mol},
-        forcefield={"mol": ff},
+        system={mol: ff},
         boundary=(
             "periodic",
             "periodic",
