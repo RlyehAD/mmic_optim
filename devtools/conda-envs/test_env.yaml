@@ -17,6 +17,6 @@ dependencies:
     - pydantic
     - qcelemental
     - mmic
-    - git+https://github.com/MolSSI/mmelemental.git
+    - mmelemental
     - cmselemental
     - git+https://github.com/MolSSI/mm_data.git

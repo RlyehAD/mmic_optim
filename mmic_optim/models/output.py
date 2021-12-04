@@ -9,7 +9,7 @@ __all__ = ["OutputOptim"]
 
 class OutputOptim(OutputProc):
     proc_input: InputOptim = Field(
-        ..., description="Input schema used to run optimization"
+        ..., description="Input schema used to run optimization",
     )
     molecule: Union[Molecule, List[Molecule]] = Field(
         ...,
@@ -26,5 +26,5 @@ class OutputOptim(OutputProc):
         "e.g. ligand scores used in docking simulations.",
     )
     observable_units: Optional[Dict[str, str]] = Field(
-        None, description="Observable units. Any unit supported by pint is allowed."
+        None, description="Observable units. Any unit supported by pint is allowed.",
     )
